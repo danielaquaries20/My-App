@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="school"
+            type="String" />
+
+        <variable
+            name="resImg"
+            type="android.graphics.drawable.Drawable" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".the_twin_binding.DetailActivity">
+
+        <ImageView
+            android:id="@+id/iv_pp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp12"
+            android:text='@={name}'
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp12"
+            android:text='@={school}'
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+</layout>

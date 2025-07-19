@@ -1,0 +1,6 @@
+CREATE TABLE friends (
+ name TEXT,
+ school TEXT
+ hobby TEXT,
+ id INT(11) PRIMARY KEY AUTO_INCREMENT
+);

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="12dp"
+    tools:context=".kalkulator.ScientificCalsulatorActivity">
+
+    <TextView
+        android:id="@+id/tvInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="end"
+        android:text="0"
+        android:textColor="#000000"
+        android:textSize="36sp" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvInput"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:rowCount="5">
+
+        <!-- Row 1 -->
+        <Button
+            android:id="@+id/btnDot"
+            style="@style/CalcBtnGray"
+            android:text="." />
+
+        <Button
+            android:id="@+id/btnOpen"
+            style="@style/CalcBtnGray"
+            android:text="(" />
+
+        <Button
+            android:id="@+id/btnClose"
+            style="@style/CalcBtnGray"
+            android:text=")" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            style="@style/CalcBtnOrange"
+            android:text="+" />
+
+        <!-- Row 2 -->
+        <Button
+            android:id="@+id/btn1"
+            style="@style/CalcBtnGray"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/btn2"
+            style="@style/CalcBtnGray"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/btn3"
+            style="@style/CalcBtnGray"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/btnSubtract"
+            style="@style/CalcBtnOrange"
+            android:text="-" />
+
+        <!-- Row 3 -->
+        <Button
+            android:id="@+id/btn4"
+            style="@style/CalcBtnGray"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/btn5"
+            style="@style/CalcBtnGray"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/btn6"
+            style="@style/CalcBtnGray"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/btnMultiply"
+            style="@style/CalcBtnOrange"
+            android:text="*" />
+
+        <!-- Row 4 -->
+        <Button
+            android:id="@+id/btn7"
+            style="@style/CalcBtnGray"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/btn8"
+            style="@style/CalcBtnGray"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/btn9"
+            style="@style/CalcBtnGray"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/btnDivide"
+            style="@style/CalcBtnOrange"
+            android:text="/" />
+
+        <!-- Row 5 -->
+        <Button
+            android:id="@+id/btnClear"
+            style="@style/CalcBtnOrange"
+            android:text="C" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            style="@style/CalcBtnOrange"
+            android:text="DEL"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn0"
+            style="@style/CalcBtnGray"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/btnEquals"
+            style="@style/CalcBtnGreen"
+            android:text="=" />
+
+    </GridLayout>
+
+</RelativeLayout>

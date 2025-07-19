@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".kalkulator.BasicCalculatorActivity">
+
+    <TextView
+        android:id="@+id/textHasil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hasil ="
+        android:textColor="#00BCD4"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="8dp"
+        android:text="0"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/input1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#E91E63"
+        android:hint="Angka pertama"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/input2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#E91E63"
+        android:hint="Angka kedua"
+        android:inputType="numberDecimal" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="3"
+        android:columnOrderPreserved="false"
+        android:rowCount="2">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTambah"
+            style="@style/KalkButton"
+            android:text="+" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnKali"
+            style="@style/KalkButton"
+            android:text="X" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHitung"
+            style="@style/KalkButton"
+            android:text="HITUNG" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnKurang"
+            style="@style/KalkButton"
+            android:text="-" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBagi"
+            style="@style/KalkButton"
+            android:text=":" />
+
+    </GridLayout>
+
+</LinearLayout>
