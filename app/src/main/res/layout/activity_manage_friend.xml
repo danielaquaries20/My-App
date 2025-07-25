@@ -89,4 +89,18 @@
         android:textColor="@color/white"
         android:textSize="17sp" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp12"
+        android:background="@drawable/bg_btn_orange"
+        android:text="Edit Friend"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:visibility="gone" />
+
+
 </LinearLayout>

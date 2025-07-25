@@ -13,4 +13,13 @@ class FriendViewModel(private val friendDao: FriendDao) : ViewModel() {
     suspend fun insertFriend(data: FriendEntity) {
         friendDao.insert(data)
     }
+
+    suspend fun updateFriend(data: FriendEntity) {
+        friendDao.update(data)
+    }
+
+    suspend fun deleteFriend(data: FriendEntity) {
+        friendDao.delete(data)
+    }
+
 }

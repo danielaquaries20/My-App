@@ -68,30 +68,32 @@ class ListFriendActivity : AppCompatActivity() {
             Friend("Kevin Hart", "SMAN 1 Bergas", img3)
         )*/
 
-
-        adapter = RvFriendAdapter(this) { position, data ->
-            val destination = Intent(this, ManageFriendActivity::class.java).apply {
-                putExtra("id", data.id)
+        adapter = RvFriendAdapter(
+            this,
+            { position, data ->
+                val destination = Intent(this, ManageFriendActivity::class.java).apply {
+                    putExtra("id", data.id)
+                }
+                startActivity(destination)
+                /*val friendPhoto = data.photo?.let { drawableToByteArray(it) }
+                val destination = Intent(this, DetailFriendActivity::class.java)
+                with(destination) {
+                    putExtra("nama", data.name)
+                    putExtra("sekolah", data.school)
+                    putExtra("foto", friendPhoto)
+                }
+                startActivity(destination)*/
+            }, { position, data ->
+                deleteFriend(data)
             }
-            startActivity(destination)
-            /*val friendPhoto = data.photo?.let { drawableToByteArray(it) }
-            val destination = Intent(this, DetailFriendActivity::class.java)
-            with(destination) {
-                putExtra("nama", data.name)
-                putExtra("sekolah", data.school)
-                putExtra("foto", friendPhoto)
-            }
-            startActivity(destination)*/
-        }
+        )
 
         binding.rvFriend.adapter = adapter
 
-//        getAllFriend()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.getFriend().collect { friends ->
-                        Log.d("DATABASE", "Friends: $friends")
                         friendList.clear()
                         friendList.addAll(friends)
                         adapter.setData(friendList)
@@ -107,17 +109,11 @@ class ListFriendActivity : AppCompatActivity() {
 
     }
 
-    private fun getAllFriend() {
+    private fun deleteFriend(data: FriendEntity) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.getFriend().collect {data ->
-                        friendList.clear()
-                        friendList.addAll(data)
-                        adapter.setData(friendList)
-                    }
-                }
-            }
+//            friendList.remove(data)
+            viewModel.deleteFriend(data)
+//            adapter.setData(friendList)
         }
     }
 

@@ -28,6 +28,8 @@ class ManageFriendActivity : AppCompatActivity() {
 
     private var idFriend: Int = 0
 
+    private lateinit var oldFriend: FriendEntity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,7 +47,21 @@ class ManageFriendActivity : AppCompatActivity() {
         initView()
 
         binding.btnAdd.setOnClickListener {
-            addData()
+            if (idFriend == 0) {
+                addData()
+            } else {
+                updateData()
+            }
+        }
+
+        binding.btnEdit.setOnClickListener {
+            binding.tvTitle.text = "UPDATE FRIEND"
+            binding.etName.isEnabled = true
+            binding.etSchool.isEnabled = true
+            binding.etHobby.isEnabled = true
+            binding.btnAdd.text = "Update"
+            binding.btnAdd.isVisible = true
+            binding.btnEdit.isVisible = false
         }
     }
 
@@ -58,6 +74,7 @@ class ManageFriendActivity : AppCompatActivity() {
         binding.etSchool.isEnabled = false
         binding.etHobby.isEnabled = false
         binding.btnAdd.isVisible = false
+        binding.btnEdit.isVisible = true
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -66,12 +83,38 @@ class ManageFriendActivity : AppCompatActivity() {
                         binding.etName.editText?.setText(friend.name)
                         binding.etSchool.editText?.setText(friend.school)
                         binding.etHobby.editText?.setText(friend.hobby)
+                        oldFriend = friend
                     }
                 }
             }
         }
 
     }
+
+    private fun updateData() {
+        val name = binding.etName.editText?.text.toString().trim()
+        val school = binding.etSchool.editText?.text.toString().trim()
+        val hobby = binding.etHobby.editText?.text.toString().trim()
+
+        if (name.isEmpty() || school.isEmpty() || hobby.isEmpty()) {
+            Toast.makeText(this, "Please fill the blank form", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (name == oldFriend.name && school == oldFriend.school && hobby == oldFriend.hobby) {
+            Toast.makeText(this, "There is no change", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val data = oldFriend.copy(name = name, school = school, hobby = hobby).apply {
+            id = idFriend
+        }
+        lifecycleScope.launch {
+            viewModel.insertFriend(data)
+        }
+        finish()
+    }
+
 
     private fun addData() {
         val name = binding.etName.editText?.text.toString().trim()

@@ -13,7 +13,8 @@ import com.daniel.myapp.app_friend.model.Friend
 
 class RvFriendAdapter(
     private val context: Context,
-    private val onItemClick: (position: Int, data: FriendEntity) -> Unit
+    private val onItemClick: (position: Int, data: FriendEntity) -> Unit,
+    private val onDeleteClick: (position: Int, data: FriendEntity) -> Unit
 ) : RecyclerView.Adapter<RvFriendAdapter.Companion.FriendViewHolder>() {
 
     private var listItem = emptyList<FriendEntity>()
@@ -22,7 +23,7 @@ class RvFriendAdapter(
         class FriendViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val tvName: TextView = view.findViewById(R.id.tv_name)
             val tvSchool: TextView = view.findViewById(R.id.tv_school)
-            val ivPhoto: ImageView = view.findViewById(R.id.iv_photo)
+            val ivDelete: ImageView = view.findViewById(R.id.iv_delete)
         }
     }
 
@@ -44,6 +45,7 @@ class RvFriendAdapter(
 //        holder.ivPhoto.setImageDrawable(currentItem.photo)
 
         holder.itemView.setOnClickListener { onItemClick(position, currentItem) }
+        holder.ivDelete.setOnClickListener { onDeleteClick(position, currentItem) }
     }
 
     fun setData(list: List<FriendEntity>) {
