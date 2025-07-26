@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        //New Code for MainActivity.kt
+
         btnShow = findViewById(R.id.btn_show)
 
 //        btnShow.setOnClickListener { showAlertDialog() }
