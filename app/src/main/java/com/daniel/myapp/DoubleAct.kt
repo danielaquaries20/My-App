@@ -1,4 +1,5 @@
 package com.daniel.myapp
 
-class DoubleAct {
+fun main() {
+    println("Hello World!")
 }
