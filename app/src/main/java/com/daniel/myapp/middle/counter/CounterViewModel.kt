@@ -2,11 +2,15 @@ package com.daniel.myapp.middle.counter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.crocodic.core.base.viewmodel.CoreViewModel
 import com.daniel.myapp.middle.aa_shared_pref.MiddleSession
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class CounterViewModel(private val session: MiddleSession) : ViewModel() {
+@HiltViewModel
+class CounterViewModel @Inject constructor(private val session: MiddleSession) : CoreViewModel() {
 
     private val _count = MutableStateFlow(session.getCount())
     val count: StateFlow<Int> = _count
@@ -23,6 +27,10 @@ class CounterViewModel(private val session: MiddleSession) : ViewModel() {
         _count.value = newValue
         session.saveCount(newValue)
     }
+
+    override fun apiLogout() {}
+
+    override fun apiRenewToken() {}
 }
 
 class CounterViewModelFactory(private val session: MiddleSession) : ViewModelProvider.Factory {

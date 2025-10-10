@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
+//    alias(libs.plugins.google.gms)
+    alias(libs.plugins.firebaseGms)
+    alias(libs.plugins.firebaseCrashlytic)
+    alias(libs.plugins.firebasePerf)
 }
 
 android {
@@ -39,6 +45,10 @@ android {
         viewBinding = true
         dataBinding = true
     }
+
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+    }
 }
 
 dependencies {
@@ -58,8 +68,15 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
 
-    implementation(libs.coroutine)
+    implementation(libs.activity.ktx)
+    implementation(libs.daggerHilt)
+    ksp(libs.daggerHiltCompiler)
 
+    implementation(libs.coroutine)
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.firebase.analytic)
+
+    implementation(libs.coreCrocodic)
 }
 
 kapt {

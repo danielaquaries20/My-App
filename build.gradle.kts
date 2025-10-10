@@ -2,4 +2,10 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.daggerHilt) apply false
+//    alias(libs.plugins.google.gms) apply false
+    alias(libs.plugins.firebaseGms) apply false
+    alias(libs.plugins.firebaseCrashlytic) apply false
+    alias(libs.plugins.firebasePerf) apply false
 }

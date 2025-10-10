@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1070133950489",
+    "project_id": "middle-ki",
+    "storage_bucket": "middle-ki.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070133950489:android:17b60574713b413e799288",
+        "android_client_info": {
+          "package_name": "com.daniel.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfAkq-SiZWfxzxTE2v2k9k_x88f9ASogo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
