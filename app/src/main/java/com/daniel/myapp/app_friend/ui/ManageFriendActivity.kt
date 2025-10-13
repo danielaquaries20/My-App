@@ -12,19 +12,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.crocodic.core.base.activity.CoreActivity
 import com.daniel.myapp.R
 import com.daniel.myapp.app_friend.database.entity.FriendEntity
-import com.daniel.myapp.app_friend.ui.viewmodel.FriendVMFactory
 import com.daniel.myapp.app_friend.ui.viewmodel.FriendViewModel
 import com.daniel.myapp.databinding.ActivityManageFriendBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ManageFriendActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityManageFriendBinding
-
-    private lateinit var viewModel: FriendViewModel
+@AndroidEntryPoint
+class ManageFriendActivity :
+    CoreActivity<ActivityManageFriendBinding, FriendViewModel>(R.layout.activity_manage_friend) {
 
     private var idFriend: Int = 0
 
@@ -33,16 +32,11 @@ class ManageFriendActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityManageFriendBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val viewModelFactory = FriendVMFactory(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[FriendViewModel::class.java]
 
         initView()
 

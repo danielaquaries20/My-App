@@ -24,11 +24,7 @@
         <activity
             android:name=".middle.mvvm_counter.MvvmCounterActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".middle.counter.CounterActivity"
@@ -52,7 +48,13 @@
             android:exported="false" />
         <activity
             android:name=".app_friend.ui.ListFriendActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".the_twin_binding.DetailActivity"
             android:exported="false" />

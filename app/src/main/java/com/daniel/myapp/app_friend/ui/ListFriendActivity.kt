@@ -1,53 +1,38 @@
 package com.daniel.myapp.app_friend.ui
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.createBitmap
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.daniel.myapp.R
-import com.daniel.myapp.app_friend.adapter.RvFriendAdapter
-import com.daniel.myapp.app_friend.model.Friend
-import com.daniel.myapp.databinding.ActivityHomeBinding
-import com.daniel.myapp.databinding.ActivityListFriendBinding
-import com.daniel.myapp.the_twin_binding.DetailActivity
-import java.io.ByteArrayOutputStream
-import androidx.core.graphics.createBitmap
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.daniel.myapp.app_friend.database.MyDatabase
+import com.crocodic.core.base.activity.CoreActivity
+import com.crocodic.core.extension.openActivity
+import com.daniel.myapp.R
+import com.daniel.myapp.app_friend.adapter.RvFriendAdapter
 import com.daniel.myapp.app_friend.database.entity.FriendEntity
-import com.daniel.myapp.app_friend.ui.viewmodel.FriendVMFactory
 import com.daniel.myapp.app_friend.ui.viewmodel.FriendViewModel
-import kotlinx.coroutines.flow.collect
+import com.daniel.myapp.databinding.ActivityListFriendBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
-class ListFriendActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityListFriendBinding
+@AndroidEntryPoint
+class ListFriendActivity :
+    CoreActivity<ActivityListFriendBinding, FriendViewModel>(R.layout.activity_list_friend) {
 
     private val friendList = ArrayList<FriendEntity>()
 
-    private lateinit var viewModel: FriendViewModel
     private lateinit var adapter: RvFriendAdapter
-
-    private lateinit var database: MyDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-//        setContentView(R.layout.activity_list_friend)
-
-        binding = ActivityListFriendBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -55,34 +40,19 @@ class ListFriendActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModelFactory = FriendVMFactory(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[FriendViewModel::class.java]
-
-        /*val img1 = ResourcesCompat.getDrawable(resources, R.drawable.img_friend, null)
-        val img2 = ResourcesCompat.getDrawable(resources, R.drawable.icon_friend_app_1, null)
-        val img3 = ResourcesCompat.getDrawable(resources, R.drawable.icon_friend_app_2, null)
-
-        val friends = arrayOf(
-            Friend("Budi Pamungkas", "SMKN 11 Semarang", img1),
-            Friend("Tifa Lockhart", "SMKN 1 Kendal", img2),
-            Friend("Kevin Hart", "SMAN 1 Bergas", img3)
-        )*/
+        binding.lifecycleOwner = this
 
         adapter = RvFriendAdapter(
             this,
             { position, data ->
-                val destination = Intent(this, ManageFriendActivity::class.java).apply {
+                /*val destination = Intent(this, ManageFriendActivity::class.java).apply {
                     putExtra("id", data.id)
                 }
-                startActivity(destination)
-                /*val friendPhoto = data.photo?.let { drawableToByteArray(it) }
-                val destination = Intent(this, DetailFriendActivity::class.java)
-                with(destination) {
-                    putExtra("nama", data.name)
-                    putExtra("sekolah", data.school)
-                    putExtra("foto", friendPhoto)
-                }
                 startActivity(destination)*/
+
+                openActivity<ManageFriendActivity> {
+                    putExtra("id", data.id)
+                }
             }, { position, data ->
                 deleteFriend(data)
             }
@@ -90,12 +60,14 @@ class ListFriendActivity : AppCompatActivity() {
 
         binding.rvFriend.adapter = adapter
 
+        viewModel.getFriend()
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.getFriend().collect { friends ->
+                    viewModel.friends.collect { data ->
                         friendList.clear()
-                        friendList.addAll(friends)
+                        friendList.addAll(data)
                         adapter.setData(friendList)
                     }
                 }
@@ -103,8 +75,9 @@ class ListFriendActivity : AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener {
-            val intent = Intent(this, ManageFriendActivity::class.java)
-            startActivity(intent)
+            openActivity<ManageFriendActivity>()
+            /* val intent = Intent(this, ManageFriendActivity::class.java)
+             startActivity(intent)*/
         }
 
     }
