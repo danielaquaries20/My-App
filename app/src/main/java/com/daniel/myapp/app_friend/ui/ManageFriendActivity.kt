@@ -49,26 +49,44 @@ class ManageFriendActivity :
         }
 
         binding.btnEdit.setOnClickListener {
-            binding.tvTitle.text = "UPDATE FRIEND"
-            binding.etName.isEnabled = true
-            binding.etSchool.isEnabled = true
-            binding.etHobby.isEnabled = true
-            binding.btnAdd.text = "Update"
-            binding.btnAdd.isVisible = true
-            binding.btnEdit.isVisible = false
+            stateViewEdit(true)
+            /* binding.tvTitle.text = "UPDATE FRIEND"
+             binding.etName.isEnabled = true
+             binding.etSchool.isEnabled = true
+             binding.etHobby.isEnabled = true
+             binding.etPhone.isEnabled = true
+             binding.btnAdd.text = "Update"
+             binding.btnAdd.isVisible = true
+             binding.btnEdit.isVisible = false*/
         }
+    }
+
+    private fun stateViewEdit(edit: Boolean = false) {
+        if (edit) {
+            binding.tvTitle.text = "UPDATE FRIEND"
+            binding.btnAdd.text = "Update"
+        } else binding.tvTitle.text =
+            "Your Friend Profile"
+        binding.etName.isEnabled = edit
+        binding.etSchool.isEnabled = edit
+        binding.etHobby.isEnabled = edit
+        binding.etPhone.isEnabled = edit
+        binding.btnAdd.isVisible = edit
+        binding.btnEdit.isVisible = !edit
     }
 
     private fun initView() {
         idFriend = intent.getIntExtra("id", 0)
         if (idFriend == 0) return
 
-        binding.tvTitle.text = "Your Friend Profile"
+        stateViewEdit(false)
+        /*binding.tvTitle.text = "Your Friend Profile"
         binding.etName.isEnabled = false
         binding.etSchool.isEnabled = false
         binding.etHobby.isEnabled = false
+        binding.etPhone.isEnabled = false
         binding.btnAdd.isVisible = false
-        binding.btnEdit.isVisible = true
+        binding.btnEdit.isVisible = true*/
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -77,6 +95,7 @@ class ManageFriendActivity :
                         binding.etName.editText?.setText(friend.name)
                         binding.etSchool.editText?.setText(friend.school)
                         binding.etHobby.editText?.setText(friend.hobby)
+                        binding.etPhone.editText?.setText(friend.phone)
                         oldFriend = friend
                     }
                 }
@@ -114,13 +133,14 @@ class ManageFriendActivity :
         val name = binding.etName.editText?.text.toString().trim()
         val school = binding.etSchool.editText?.text.toString().trim()
         val hobby = binding.etHobby.editText?.text.toString().trim()
+        val phone = binding.etPhone.editText?.text.toString().trim()
 
-        if (name.isEmpty() || school.isEmpty() || hobby.isEmpty()) {
+        if (name.isEmpty() || school.isEmpty() || hobby.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, "Please fill the blank form", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val data = FriendEntity(name, school, hobby)
+        val data = FriendEntity(name, school, hobby, phone)
         lifecycleScope.launch {
             viewModel.insertFriend(data)
         }

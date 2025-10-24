@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.crocodic.core.data.CoreDao
 import com.daniel.myapp.app_friend.database.entity.FriendEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FriendDao {
+interface FriendDao: CoreDao<FriendEntity> {
     @Query("SELECT * FROM friends ORDER BY name ASC")
     fun getAllFriends(): Flow<List<FriendEntity>>
 
@@ -19,13 +20,4 @@ interface FriendDao {
 
     @Query("SELECT * FROM friends WHERE id = :id")
     fun getFriendById(id: Int): Flow<FriendEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(friend: FriendEntity)
-
-    @Update
-    suspend fun update(friend: FriendEntity)
-
-    @Delete
-    suspend fun delete(friend: FriendEntity)
 }
