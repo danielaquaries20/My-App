@@ -1,5 +1,6 @@
 package com.daniel.myapp.app_friend.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

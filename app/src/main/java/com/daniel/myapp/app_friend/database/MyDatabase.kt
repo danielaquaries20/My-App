@@ -13,12 +13,15 @@ import com.daniel.myapp.app_friend.database.entity.FriendEntity
 
 @Database(
     entities = [FriendEntity::class],
-    version = 6,
+    version = 9,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(3,4),
         AutoMigration(4, 5, MyDatabase.RenameFrndBioToDescription::class),
-        AutoMigration(5, 6, MyDatabase.DeleteFrndDescription::class)
+        AutoMigration(5, 6, MyDatabase.DeleteFrndDescription::class),
+        AutoMigration(6,7),
+        AutoMigration(7, 8, MyDatabase.RenameFrndDescToBio::class),
+        AutoMigration(8, 9, MyDatabase.DeleteFrndBio::class)
     ]
 )
 abstract class MyDatabase : RoomDatabase() {
@@ -30,6 +33,12 @@ abstract class MyDatabase : RoomDatabase() {
 
     @DeleteColumn("friends", "description")
     class DeleteFrndDescription : AutoMigrationSpec
+
+    @RenameColumn("friends", "desc", "bio")
+    class RenameFrndDescToBio : AutoMigrationSpec
+
+    @DeleteColumn("friends", "bio")
+    class DeleteFrndBio : AutoMigrationSpec
 
     companion object {
 
