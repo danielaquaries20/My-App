@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -22,15 +24,23 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".middle.mvvm_counter.MvvmCounterActivity"
+            android:name=".app_tour.ui.home.HomeTourActivity"
+            android:exported="false" />
+        <activity
+            android:name=".app_tour.ui.login.LoginActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
+            android:name=".middle.mvvm_counter.MvvmCounterActivity"
+            android:exported="true" />
+        <activity
             android:name=".middle.counter.CounterActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".permit.CameraGalleryActivity"
             android:exported="true" />
@@ -48,12 +58,8 @@
             android:exported="false" />
         <activity
             android:name=".app_friend.ui.ListFriendActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".the_twin_binding.DetailActivity"
