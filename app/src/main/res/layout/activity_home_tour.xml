@@ -19,13 +19,13 @@
             android:layout_marginBottom="10dp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_logout"
+            android:id="@+id/btn_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp20"
             android:layout_marginTop="@dimen/dp12"
             android:background="@drawable/bg_btn_orange"
-            android:text="Logout"
+            android:text="Settings"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp" />

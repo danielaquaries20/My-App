@@ -25,6 +25,8 @@ firebasePerf = "1.4.2"
 firebase = "34.3.0"
 coreCrocodic = "4.0.11"
 
+biometric = "1.4.0-alpha02"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +52,7 @@ activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref
 #firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics"}
 
 coreCrocodic = {group = "com.github.crocodic-studio", name = "AndroidCoreProject", version.ref = "coreCrocodic"}
+biometric = {group = "androidx.biometric", name = "biometric", version.ref = "biometric"}
 
 
 

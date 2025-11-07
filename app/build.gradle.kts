@@ -84,6 +84,8 @@ dependencies {
 //    implementation(libs.firebase.analytic)
 
     implementation(libs.coreCrocodic)
+    implementation(libs.biometric)
+
 }
 
 kapt {

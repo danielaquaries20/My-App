@@ -12,6 +12,7 @@ import com.crocodic.core.extension.openActivity
 import com.daniel.myapp.R
 import com.daniel.myapp.app_tour.ui.login.AuthViewModel
 import com.daniel.myapp.app_tour.ui.login.LoginActivity
+import com.daniel.myapp.app_tour.ui.settings.SettingsActivity
 import com.daniel.myapp.databinding.ActivityHomeTourBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -40,19 +41,13 @@ class HomeTourActivity :
 
         binding.tvDetail.text = desc
 
-        binding.btnLogout.setOnClickListener(this)
+        binding.btnSettings.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.btnLogout -> logout()
+            binding.btnSettings -> openActivity<SettingsActivity>()
         }
     }
 
-    private fun logout() {
-        session.clearAll()
-        session.setValue(CoreSession.PREF_UID, 0)
-        finishAffinity()
-        openActivity<LoginActivity>()
-    }
 }
