@@ -1,6 +1,9 @@
 package com.daniel.myapp.app_tour.ui.settings
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.biometric.BiometricManager
@@ -34,11 +37,13 @@ class SettingsActivity :
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        checkBiometricCapability()
+
         binding.swBiometric.isChecked = session.getBoolean(BIOMETRIC_STATUS)
         binding.swBiometric.setOnCheckedChangeListener { compoundButton, b ->
             session.setValue(BIOMETRIC_STATUS, b)
         }
-        checkBiometricCapability()
 
         binding.btnLogout.setOnClickListener(this)
     }
@@ -50,14 +55,22 @@ class SettingsActivity :
     }
 
     private fun logout() {
-//        session.clearAll()
-        session.setValue(LoginActivity.ID, 0)
+
+        val bioSet = session.getBoolean(BIOMETRIC_STATUS)
+        val username = session.getString(LoginActivity.USERNAME)
+        val pass = session.getString(LoginActivity.PASS)
+        session.clearAll()
+        session.setValue(BIOMETRIC_STATUS, bioSet)
+        session.setValue(LoginActivity.USERNAME, username)
+        session.setValue(LoginActivity.PASS, pass)
+
+        /*session.setValue(LoginActivity.ID, 0)
         session.setValue(LoginActivity.EMAIL, "")
         session.setValue(LoginActivity.FIRST_NAME, "")
         session.setValue(LoginActivity.LAST_NAME, "")
         session.setValue(LoginActivity.GENDER, "")
         session.setValue(LoginActivity.IMAGE, "")
-        session.setValue(CoreSession.PREF_UID, "")
+        session.setValue(CoreSession.PREF_UID, "")*/
         finishAffinity()
         openActivity<LoginActivity>()
     }
@@ -84,14 +97,14 @@ class SettingsActivity :
                 BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                     // Prompts the user to create credentials that your app accepts.
 
-                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                             putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                         }
                         activityLauncher.launch(enrollIntent) {
                             checkBiometricCapability()
                         }
-                    }*/
+                    }
                     false
 
                 }
