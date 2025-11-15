@@ -1,0 +1,30 @@
+package com.daniel.myapp.app_tour.repo
+
+import android.util.Log
+import com.crocodic.core.api.ApiObserver
+import com.daniel.myapp.app_tour.api.ApiService
+import com.daniel.myapp.app_tour.api.response.ProductResponse
+import com.daniel.myapp.app_tour.model.DataProduct
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+
+class DataProductRepositoryImpl @Inject constructor(private val apiService: ApiService) :
+    DataProductRepository {
+
+    override fun getProducts(keyword: String): Flow<List<DataProduct>> = flow {
+        ApiObserver.run(
+            { apiService.getProducts(keyword) },
+            false,
+            object : ApiObserver.ModelResponseListener<ProductResponse> {
+                override suspend fun onSuccess(response: ProductResponse) {
+                    Log.d("API", "Product Response: ${response.products}")
+                    emit(response.products)
+                }
+
+                override suspend fun onError(response: ProductResponse) {
+                    emit(emptyList())
+                }
+            })
+    }
+}
