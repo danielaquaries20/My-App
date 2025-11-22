@@ -24,4 +24,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun sortProducts(sortBy: String = "", orderBy: String = "") = viewModelScope.launch {
+        repoDataProduct.sortProducts(sortBy, orderBy).collect {
+            _product.emit(it)
+        }
+    }
+
+    fun filterProducts(filter: String = "") = viewModelScope.launch {
+        repoDataProduct.filterProducts(filter).collect {
+            _product.emit(it)
+        }
+    }
+
 }

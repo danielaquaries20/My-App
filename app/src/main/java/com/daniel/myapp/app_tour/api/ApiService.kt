@@ -7,6 +7,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -19,5 +20,16 @@ interface ApiService {
     @GET("products/search")
     suspend fun getProducts(
         @Query("q") keyword: String
+    ): ProductResponse
+
+    @GET("products/search")
+    suspend fun sortProducts(
+        @Query("sortBy") sortBy: String,
+        @Query("order") order: String
+    ): ProductResponse
+
+    @GET("products/category/{category}")
+    suspend fun filterProducts(
+        @Path("category") category: String
     ): ProductResponse
 }

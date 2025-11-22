@@ -27,4 +27,34 @@ class DataProductRepositoryImpl @Inject constructor(private val apiService: ApiS
                 }
             })
     }
+
+    override fun sortProducts(sortBy: String, order: String): Flow<List<DataProduct>> = flow {
+        ApiObserver.run(
+            { apiService.sortProducts(sortBy, order) },
+            false,
+            object : ApiObserver.ModelResponseListener<ProductResponse> {
+                override suspend fun onSuccess(response: ProductResponse) {
+                    emit(response.products)
+                }
+
+                override suspend fun onError(response: ProductResponse) {
+                    emit(emptyList())
+                }
+            })
+    }
+
+    override fun filterProducts(filter: String): Flow<List<DataProduct>> = flow {
+        ApiObserver.run(
+            { apiService.filterProducts(filter) },
+            false,
+            object : ApiObserver.ModelResponseListener<ProductResponse> {
+                override suspend fun onSuccess(response: ProductResponse) {
+                    emit(response.products)
+                }
+
+                override suspend fun onError(response: ProductResponse) {
+                    emit(emptyList())
+                }
+            })
+    }
 }

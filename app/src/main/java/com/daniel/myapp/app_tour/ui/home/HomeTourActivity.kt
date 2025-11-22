@@ -16,6 +16,8 @@ import com.crocodic.core.extension.openActivity
 import com.crocodic.core.extension.tos
 import com.daniel.myapp.R
 import com.daniel.myapp.app_tour.model.DataProduct
+import com.daniel.myapp.app_tour.ui.home.bottom_sheet.BottomSheetFilterProducts
+import com.daniel.myapp.app_tour.ui.home.bottom_sheet.BottomSheetSortingProducts
 import com.daniel.myapp.app_tour.ui.login.LoginActivity
 import com.daniel.myapp.app_tour.ui.settings.SettingsActivity
 import com.daniel.myapp.databinding.ActivityHomeTourBinding
@@ -58,6 +60,8 @@ class HomeTourActivity :
         binding.tvDetail.text = desc
 
         binding.btnSettings.setOnClickListener(this)
+        binding.ftbFilter.setOnClickListener(this)
+        binding.ftbSort.setOnClickListener(this)
 
         binding.etSearch.editText?.doOnTextChanged { text, start, before, count ->
             val keyword = text.toString().trim()
@@ -84,6 +88,21 @@ class HomeTourActivity :
     override fun onClick(v: View?) {
         when (v) {
             binding.btnSettings -> openActivity<SettingsActivity>()
+            binding.ftbFilter -> {
+                val btmSht = BottomSheetFilterProducts { filter ->
+                    viewModel.filterProducts(filter)
+                }
+
+                btmSht.show(supportFragmentManager, "BtmShtFilteringProducts")
+            }
+
+            binding.ftbSort -> {
+                val btmSht = BottomSheetSortingProducts { sortBy, order ->
+                    viewModel.sortProducts(sortBy, order)
+                }
+
+                btmSht.show(supportFragmentManager, "BtmShtSortingProducts")
+            }
         }
     }
 
