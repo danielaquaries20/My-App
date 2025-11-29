@@ -57,4 +57,13 @@ class DataProductRepositoryImpl @Inject constructor(private val apiService: ApiS
                 }
             })
     }
+
+    override fun pagingProducts(limit: Int, skip: Int): Flow<List<DataProduct>> {
+        return flow {
+            val response = apiService.pagingProduct(limit, skip)
+            emit(response.products)
+        }
+    }
+
+
 }

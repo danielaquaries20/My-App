@@ -24,6 +24,9 @@ import com.daniel.myapp.databinding.ActivityHomeTourBinding
 import com.daniel.myapp.databinding.ItemProductBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.crocodic.core.base.adapter.PaginationAdapter
+import com.crocodic.core.base.adapter.PaginationLoadState
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,6 +37,12 @@ class HomeTourActivity :
 
     private val adapterCore by lazy {
         ReactiveListAdapter<ItemProductBinding, DataProduct>(R.layout.item_product).initItem { position, data ->
+            tos("$position -> ${data.title}")
+        }
+    }
+
+    private val pagingAdapterCore by lazy {
+        PaginationAdapter<ItemProductBinding, DataProduct>(R.layout.item_product).initItem { position, data ->
             tos("$position -> ${data.title}")
         }
     }
@@ -51,7 +60,10 @@ class HomeTourActivity :
         }
         binding.activity = this
 
-        binding.rvShowData.adapter = adapterCore
+//        binding.rvShowData.adapter = pagingAdapterCore
+        with(pagingAdapterCore) {
+            binding.rvShowData.adapter = withLoadStateFooter(PaginationLoadState.default)
+        }
 
         val desc = "Hallo, " + session.getString(
             LoginActivity.FIRST_NAME
@@ -70,15 +82,28 @@ class HomeTourActivity :
 
         observe()
 
-        viewModel.getProduct()
+//        viewModel.getProduct()
+        lifecycleScope.launch {
+            viewModel.queries.emit(Triple("", "", ""))
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        session.setValue("page", 0)
     }
 
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
+                /*launch {
                     viewModel.product.collect { data ->
                         adapterCore.submitList(data)
+                    }
+                }*/
+                launch {
+                    viewModel.getPagingProducts().collectLatest { data ->
+                        pagingAdapterCore.submitData(data)
                     }
                 }
             }
