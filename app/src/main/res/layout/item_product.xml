@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,8 +11,7 @@
             type="com.daniel.myapp.app_tour.model.DataProduct" />
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -25,10 +26,11 @@
 
             <ImageView
                 android:id="@+id/iv_pp"
+                urlImage='@{data.thumbnail}'
                 android:layout_width="@dimen/dp100"
                 android:layout_height="@dimen/dp100"
+                android:scaleType="fitXY"
                 android:src="@drawable/img_friend"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -38,14 +40,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp12"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:maxLines="1"
                 android:text='@{data.id + " | " + data.title}'
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_pp"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.35"
                 tools:text="Product Name" />
 
             <TextView
@@ -53,14 +57,14 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp12"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:ellipsize="end"
-                android:maxLines="4"
+                android:maxLines="1"
                 android:text='@{data.description}'
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_pp"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
                 tools:text="Product Description" />
 

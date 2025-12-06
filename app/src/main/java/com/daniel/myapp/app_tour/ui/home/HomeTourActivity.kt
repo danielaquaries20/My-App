@@ -1,6 +1,7 @@
 package com.daniel.myapp.app_tour.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
@@ -26,6 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.crocodic.core.base.adapter.PaginationAdapter
 import com.crocodic.core.base.adapter.PaginationLoadState
+import com.crocodic.core.extension.toJson
+import com.daniel.myapp.app_tour.ui.detail.DetailProductActivity
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -33,17 +37,26 @@ import javax.inject.Inject
 class HomeTourActivity :
     CoreActivity<ActivityHomeTourBinding, HomeViewModel>(R.layout.activity_home_tour) {
 
+    @Inject
+    lateinit var gson: Gson
+
     var inputKeyword = ""
 
-    private val adapterCore by lazy {
+    /*private val adapterCore by lazy {
         ReactiveListAdapter<ItemProductBinding, DataProduct>(R.layout.item_product).initItem { position, data ->
-            tos("$position -> ${data.title}")
+            openActivity<DetailProductActivity> {
+                val dataProduct = data.toJson(gson)
+                putExtra(DetailProductActivity.DATA, dataProduct)
+            }
         }
-    }
+    }*/
 
     private val pagingAdapterCore by lazy {
         PaginationAdapter<ItemProductBinding, DataProduct>(R.layout.item_product).initItem { position, data ->
-            tos("$position -> ${data.title}")
+            openActivity<DetailProductActivity> {
+                val dataProduct = data.toJson(gson)
+                putExtra(DetailProductActivity.DATA, dataProduct)
+            }
         }
     }
 
@@ -60,6 +73,7 @@ class HomeTourActivity :
         }
         binding.activity = this
 
+//        binding.rvShowData.adapter = adapterCore
 //        binding.rvShowData.adapter = pagingAdapterCore
         with(pagingAdapterCore) {
             binding.rvShowData.adapter = withLoadStateFooter(PaginationLoadState.default)
@@ -98,6 +112,7 @@ class HomeTourActivity :
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 /*launch {
                     viewModel.product.collect { data ->
+                        Log.d("API_RESPONSE", "Data: $data")
                         adapterCore.submitList(data)
                     }
                 }*/

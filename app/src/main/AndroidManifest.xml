@@ -24,6 +24,9 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
+            android:name=".app_tour.ui.detail.DetailProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".app_tour.ui.settings.SettingsActivity"
             android:exported="false" />
         <activity
@@ -61,7 +64,7 @@
             android:exported="false" />
         <activity
             android:name=".app_friend.ui.ListFriendActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".the_twin_binding.DetailActivity"
             android:exported="false" />
