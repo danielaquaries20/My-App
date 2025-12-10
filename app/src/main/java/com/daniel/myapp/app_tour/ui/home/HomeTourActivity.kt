@@ -100,6 +100,7 @@ class HomeTourActivity :
         lifecycleScope.launch {
             viewModel.queries.emit(Triple("", "", ""))
         }
+        viewModel.getSlider()
     }
 
     override fun onStart() {
@@ -119,6 +120,12 @@ class HomeTourActivity :
                 launch {
                     viewModel.getPagingProducts().collectLatest { data ->
                         pagingAdapterCore.submitData(data)
+                    }
+                }
+
+                launch {
+                    viewModel.slider.collect { data ->
+                        binding.ivSlider.setImageList(data)
                     }
                 }
             }

@@ -38,4 +38,8 @@ interface ApiService {
         @Query("limit") limit: Int,
         @Query("skip") skip: Int,
     ): ProductResponse
+
+    @GET("products?limit=10&skip=90&select=thumbnail,title")
+    suspend fun getSlider(): ProductResponse
+
 }

@@ -26,6 +26,7 @@ firebase = "34.3.0"
 coreCrocodic = "4.0.11"
 
 biometric = "1.4.0-alpha02"
+imageSlider = "0.1.2"
 
 
 [libraries]
@@ -53,7 +54,7 @@ activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref
 
 coreCrocodic = {group = "com.github.crocodic-studio", name = "AndroidCoreProject", version.ref = "coreCrocodic"}
 biometric = {group = "androidx.biometric", name = "biometric", version.ref = "biometric"}
-
+imageSlider = {group = "com.github.denzcoskun", name = "ImageSlideshow", version.ref = "imageSlider"}
 
 
 [plugins]

@@ -55,6 +55,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/iv_slider"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        app:iss_auto_cycle="true"
+                        app:iss_delay="1000"
+                        app:iss_period="2000"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_settings" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/et_search"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -65,7 +78,7 @@
                         android:hint="Search Product"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_settings"
+                        app:layout_constraintTop_toBottomOf="@id/iv_slider"
                         app:startIconDrawable="@drawable/icon_search">
 
                         <com.google.android.material.textfield.TextInputEditText

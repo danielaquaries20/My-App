@@ -15,6 +15,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.crocodic.core.base.adapter.CorePagingSource
 import com.crocodic.core.data.CoreSession
+import com.denzcoskun.imageslider.models.SlideModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
@@ -69,4 +70,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private val _slider = MutableSharedFlow<List<SlideModel>>()
+    val slider = _slider.asSharedFlow()
+
+    fun getSlider() = viewModelScope.launch {
+        repoDataProduct.getSlider().collect {
+            val data = ArrayList<SlideModel>()
+            it.forEach { photo ->
+                data.add(SlideModel(photo.thumbnail, photo.title))
+            }
+            _slider.emit(data)
+        }
+    }
 }
