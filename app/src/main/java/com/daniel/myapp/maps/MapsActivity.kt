@@ -4,7 +4,6 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.crocodic.core.base.activity.CoreActivity
@@ -13,19 +12,16 @@ import com.daniel.myapp.R
 import com.daniel.myapp.app_tour.ui.home.HomeViewModel
 import com.daniel.myapp.databinding.ActivityMapsBinding
 import com.daniel.myapp.maps.helper.AddressHelper
-import com.google.android.gms.maps.CameraUpdate
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import androidx.core.app.ActivityCompat
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import com.google.android.gms.maps.model.CircleOptions
 import com.crocodic.core.helper.LocationHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import androidx.core.graphics.toColorInt
+import com.google.android.gms.maps.CameraUpdateFactory
 
 @AndroidEntryPoint
 class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.activity_maps) {
@@ -33,7 +29,9 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
     @Inject
     lateinit var addressHelper: AddressHelper
 
-    var theLoc = LatLng( -6.9826794, 110.4064857)
+    //-7.1179884, 110.3951523
+    //-6.9826794, 110.4064857
+    var theLoc = LatLng( -7.1179884, 110.3951523)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +59,7 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLoc, 36f))*/
 
             //Map 2 - Camera Listener Geocoder
-            googleMap.setOnCameraMoveListener {
+            /*googleMap.setOnCameraMoveListener {
                 binding.ivTarget.alpha = 0.5f
             }
 
@@ -81,10 +79,13 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
                 ) {
                     binding.tvAddress.text = it
                 }
-            }
+            }*/
 
             //Map 3 - Geofence
-           /* if (ActivityCompat.checkSelfPermission(
+            // -7.1179884, 110.3951523 -> LatLng 1
+            // -7.8266, 112.0110 -> LatLng 2
+            // -6.9826794,110.4064857
+            if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -96,10 +97,6 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
             }
             googleMap.isMyLocationEnabled = true
 
-            // -7.1179884, 110.3951523 -> LatLng 1
-            // -7.8266, 112.0110 -> LatLng 2
-            // -6.9826794,110.4064857
-
             val area = googleMap.addCircle(
                 CircleOptions()
                     .center(LatLng(theLoc.latitude, theLoc.longitude))
@@ -107,15 +104,15 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
                     .strokeColor("#FFC80000".toColorInt())
                     .fillColor("#25C80000".toColorInt())
                     .visible(true)
-            )*/
+            )
         }
 
     }
 
     private fun isInsideLocation(area: LatLng, position: LatLng): Boolean {
-        val itu = LocationHelper.distance(area, position)
-        Log.d("deviceLocation", "Jarak $itu")
-        return itu < 1
+        val loc = LocationHelper.distance(area, position)
+        Log.d("deviceLocation", "Jarak $loc")
+        return loc < 1
     }
 
 
@@ -123,7 +120,7 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
         super.retrieveLocationChange(location)
 //        Log.d("deviceLocation", "latitude: ${location.latitude}, longitude: ${location.longitude}")
         //Map 3 - Geofence
-        /*binding.mapView.getMapAsync { googleMap ->
+        binding.mapView.getMapAsync { googleMap ->
             googleMap.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     LatLng(
@@ -145,7 +142,7 @@ class MapsActivity : CoreActivity<ActivityMapsBinding, HomeViewModel>(R.layout.a
             }
 
             binding.tvStatus.text = "Kamu berada di $status area."
-        }*/
+        }
     }
 
     override fun onStart() {

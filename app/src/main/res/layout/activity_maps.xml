@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="@id/map_view"
             app:layout_constraintStart_toStartOf="@id/map_view"
             app:layout_constraintTop_toTopOf="@id/map_view"
-            android:visibility="visible"
+            android:visibility="gone"
             app:tint="@color/text_red" />
 
         <androidx.cardview.widget.CardView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
