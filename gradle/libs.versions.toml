@@ -28,6 +28,8 @@ coreCrocodic = "4.0.11"
 biometric = "1.4.0-alpha02"
 imageSlider = "0.1.2"
 
+workManager = "2.11.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -55,6 +57,7 @@ activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref
 coreCrocodic = {group = "com.github.crocodic-studio", name = "AndroidCoreProject", version.ref = "coreCrocodic"}
 biometric = {group = "androidx.biometric", name = "biometric", version.ref = "biometric"}
 imageSlider = {group = "com.github.denzcoskun", name = "ImageSlideshow", version.ref = "imageSlider"}
+workManager = {group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager"}
 
 
 [plugins]

@@ -20,14 +20,20 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import com.crocodic.core.base.activity.CoreActivity
 import com.crocodic.core.base.activity.NoViewModelActivity
 import com.crocodic.core.extension.snacked
+import com.crocodic.core.extension.tos
 import com.daniel.myapp.R
 import com.daniel.myapp.app_tour.ui.home.HomeViewModel
 import com.daniel.myapp.databinding.ActivityBasicNotificationBinding
 import com.daniel.myapp.maps.MapsActivity
+import com.daniel.myapp.notification.worker.NotificationWorker
 import com.daniel.myapp.the_twin_binding.HomeActivity
+import java.util.concurrent.TimeUnit
 
 class BasicNotificationActivity :
     CoreActivity<ActivityBasicNotificationBinding, HomeViewModel>(R.layout.activity_basic_notification) {
@@ -49,6 +55,22 @@ class BasicNotificationActivity :
             showNotification("Hallo Gais!", "Saya sedang belajar membuat notifikasi.")
         }
 
+        binding.btnReqNotif.setOnClickListener {
+            createWorkNotification()
+        }
+
+    }
+
+    private fun createWorkNotification() {
+        val notificationWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(15, TimeUnit.SECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(notificationWorkRequest)
+
+        tos("Aplikasi tertutup dan tunggu 15 detik ya")
+
+        finishAffinity()
     }
 
     private fun showNotification(title: String, content: String) {
@@ -104,7 +126,8 @@ class BasicNotificationActivity :
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED -> {}
+            ) == PackageManager.PERMISSION_GRANTED -> {
+            }
 
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                 binding.root.snacked(

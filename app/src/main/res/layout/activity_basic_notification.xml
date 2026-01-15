@@ -15,12 +15,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:textAllCaps="false"
-            android:text="Show Notification (Basic)"
             android:layout_marginVertical="@dimen/dp12"
+            android:text="Show Notification (Basic)"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_req_notif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="@dimen/dp12"
+            android:text="Request Notification (Basic)"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@id/btn_show_notif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
