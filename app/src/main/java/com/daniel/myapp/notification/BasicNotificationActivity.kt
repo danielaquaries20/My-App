@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -26,11 +27,13 @@ import androidx.work.WorkRequest
 import com.crocodic.core.base.activity.CoreActivity
 import com.crocodic.core.base.activity.NoViewModelActivity
 import com.crocodic.core.extension.snacked
+import com.crocodic.core.extension.text
 import com.crocodic.core.extension.tos
 import com.daniel.myapp.R
 import com.daniel.myapp.app_tour.ui.home.HomeViewModel
 import com.daniel.myapp.databinding.ActivityBasicNotificationBinding
 import com.daniel.myapp.maps.MapsActivity
+import com.daniel.myapp.notification.worker.InAppNotificationWorker
 import com.daniel.myapp.notification.worker.NotificationWorker
 import com.daniel.myapp.the_twin_binding.HomeActivity
 import java.util.concurrent.TimeUnit
@@ -59,6 +62,38 @@ class BasicNotificationActivity :
             createWorkNotification()
         }
 
+        binding.btnInAppNotif.setOnClickListener {
+            createInAppNotification()
+        }
+
+    }
+
+    private fun createInAppNotification() {
+        val input = binding.etCd.text.toString()
+        if (input.isEmpty()) {
+            tos("Isi Countdown dahulu")
+            return
+        }
+
+        val inputSecond = input.toLong()
+        val notificationWorkRequest: WorkRequest =
+            OneTimeWorkRequestBuilder<InAppNotificationWorker>()
+                .setInitialDelay(inputSecond, TimeUnit.SECONDS)
+                .build()
+
+        WorkManager.getInstance(this).enqueue(notificationWorkRequest)
+
+        showCountDown(inputSecond)
+    }
+
+    private fun showCountDown(countdown: Long) {
+        object : CountDownTimer(TimeUnit.SECONDS.toMillis(countdown), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.tvCd.text("${millisUntilFinished / 1000}")
+            }
+
+            override fun onFinish() {}
+        }.start()
     }
 
     private fun createWorkNotification() {
