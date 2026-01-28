@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,7 @@ import com.daniel.myapp.maps.MapsActivity
 import com.daniel.myapp.notification.worker.InAppNotificationWorker
 import com.daniel.myapp.notification.worker.NotificationWorker
 import com.daniel.myapp.the_twin_binding.HomeActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.concurrent.TimeUnit
 
 class BasicNotificationActivity :
@@ -66,6 +68,23 @@ class BasicNotificationActivity :
             createInAppNotification()
         }
 
+        getFcmToken()
+    }
+
+    private fun getFcmToken() {
+        generateFirebaseToken { FcmToken ->
+            Log.d("firebase-token", FcmToken)
+        }
+    }
+
+    private fun generateFirebaseToken(result: (String) -> Unit) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                Log.w("firebase-token", "Fetching FCM registration token failed", it.exception)
+                return@addOnCompleteListener
+            }
+            result(it.result)
+        }
     }
 
     private fun createInAppNotification() {
